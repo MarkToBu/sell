@@ -1,0 +1,14 @@
+
+
+
+# 日志设置
+logging:
+  pattern:
+    console: "%d - %msg%n"
+  file:
+    name:  sell.log
+    path:  ${catalina.base:-.}/logs
+  level:  #可以指定类
+    root: debug
+
+
