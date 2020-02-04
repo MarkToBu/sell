@@ -1,14 +1,21 @@
 
 
+# æ—¥å¿—è®¾ç½®
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+#  file:
+#    name:  sell.log
+#    path:  ${catalina.base:-.}/logs
+#  level:  #å¯ä»¥æŒ‡å®šç±»
+#    root: debug
 
-# ÈÕÖ¾ÉèÖÃ
-logging:
-  pattern:
-    console: "%d - %msg%n"
-  file:
-    name:  sell.log
-    path:  ${catalina.base:-.}/logs
-  level:  #¿ÉÒÔÖ¸¶¨Àà
-    root: debug
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Lbj19841230
 
-
+    url: jdbc:mysql://rm-bp1z8e736h17ic2n2ao.mysql.rds.aliyuncs.com/res?characterEncoding=utf-8&useSSL=false
+  jpa:
+    show-sql: true
