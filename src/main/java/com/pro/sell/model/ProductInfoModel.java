@@ -36,7 +36,9 @@ public class ProductInfoModel implements java.io.Serializable {
 
     /** productId */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name="idGenerator", strategy="uuid")
+    @GeneratedValue(generator="idGenerator")
+    // @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "PRODUCT_ID", unique = true, nullable = false, length = 32)
     private String productId;
 
