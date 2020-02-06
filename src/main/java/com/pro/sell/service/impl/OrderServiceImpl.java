@@ -1,5 +1,7 @@
 package com.pro.sell.service.impl;
 
+import com.pro.sell.common.enums.OrderStatusEnums;
+import com.pro.sell.common.enums.PayStatusEnum;
 import com.pro.sell.common.enums.ResultEum;
 import com.pro.sell.common.exception.SellException;
 import com.pro.sell.common.util.BigDecimalUtil;
@@ -61,14 +63,14 @@ public class OrderServiceImpl implements OrderService {
             }
 
             //2. 计算订单总价  fixme decimal的计算可能有问题
-            totalAmount = orderDetail.getProductPrice().
+            totalAmount = productInfo.getProductPrice().
                     multiply(new BigDecimal(orderDetail.getProductQuantity()))
                     .add(totalAmount);
 
             //订单入库 属性赋值
+            BeanUtils.copyProperties(productInfo, orderDetail);
             orderDetail.setDetailId(KeyUtil.getUniqueKey());
             orderDetail.setOrderId(orderId);
-            BeanUtils.copyProperties(productInfo, orderDetail);
             orderDetailRepository.save(orderDetail);
 
         }
@@ -78,6 +80,8 @@ public class OrderServiceImpl implements OrderService {
         BeanUtils.copyProperties(dto, orderMasterModel);
         orderMasterModel.setOrderId(orderId);
         orderMasterModel.setOrderAmount(totalAmount);
+        orderMasterModel.setOrderStatus(OrderStatusEnums.NEW.getCode());
+        orderMasterModel.setPayStatus(PayStatusEnum.WAIT.getCode());
         orderMasterRepository.save(orderMasterModel);
 
 
