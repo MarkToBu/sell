@@ -14,6 +14,8 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import javax.persistence.*;
 
+import com.pro.sell.common.enums.OrderStatusEnums;
+import com.pro.sell.common.enums.PayStatusEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
@@ -78,13 +80,13 @@ public class OrderMasterModel implements java.io.Serializable {
      * 订单状态，默认为新下单
      */
     @Column(name = "ORDER_STATUS", nullable = false, length = 3)
-    private Integer orderStatus;
+    private Integer orderStatus = OrderStatusEnums.NEW.getCode();
 
     /**
      * 支付状态，默认为未支付
      */
     @Column(name = "PAY_STATUS", nullable = false, length = 3)
-    private Integer payStatus;
+    private Integer payStatus = PayStatusEnum.WAIT.getCode();
 
     /**
      * 创建时间

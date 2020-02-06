@@ -7,4 +7,17 @@
 
     @ApiOperation(value="根据用户编号获取用户姓名", notes="test: 仅1和2有正确返回")
     @ApiImplicitParam(paramType="query", name = "userNumber", value = "用户编号", required = true, dataType = "Integer")
---
+-- jpa查询
+//
+//    @Query(value = "select ID id, AREA_NO areaNo, AREA_NAME areaName from AREA    ", nativeQuery = true)
+//    List<Map> findDataList();
+//
+//    @Modifying
+//    @Query(value = "update AreaModel m set m.ruleParam = :ruleParam ,m.updateTime = :time where m.id = :id ")
+//    int updateAreaRuleParam(@Param("id") Long id, @Param("ruleParam") String ruleParam, @Param("time") Date time);
+//
+//    AreaModel getById(Long id);
+//
+//    List<AreaModel> findAllByStadiumId(Long stadiumId);
+//
+//    List<AreaModel> findAllByIdIsIn(List<Long> areaIds);

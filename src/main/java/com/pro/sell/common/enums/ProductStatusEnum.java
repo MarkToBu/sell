@@ -1,4 +1,4 @@
-package com.pro.sell.common;
+package com.pro.sell.common.enums;
 
 import lombok.Getter;
 
