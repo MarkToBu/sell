@@ -23,3 +23,6 @@ spring:
     url: jdbc:mysql://rm-bp1z8e736h17ic2n2ao.mysql.rds.aliyuncs.com/res?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
+
+  jackson:
+    default-property-inclusion: non_null

@@ -10,6 +10,9 @@ package com.pro.sell.dto;/*
  * Version:5.8.8
  */
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.pro.sell.common.serializer.Date2LongSerializer;
 import com.pro.sell.model.OrderDetailModel;
 import lombok.Data;
 
@@ -24,6 +27,8 @@ import java.util.List;
  * @version 1.0.0 2020-02-03
  */
 @Data
+//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderMasterDTO implements java.io.Serializable {
     /**
      * 版本号
@@ -73,11 +78,13 @@ public class OrderMasterDTO implements java.io.Serializable {
     /**
      * 创建时间
      */
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Timestamp createTime;
 
     /**
      * 修改时间
      */
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Timestamp updateTime;
 
     private List<OrderDetailModel> orderDetailList;

@@ -1,7 +1,7 @@
 package com.pro.sell.service.impl;
 
 import com.pro.sell.common.enums.ProductStatusEnum;
-import com.pro.sell.common.enums.ResultEum;
+import com.pro.sell.common.enums.ResultEnum;
 import com.pro.sell.common.exception.SellException;
 import com.pro.sell.dto.CartDTO;
 import com.pro.sell.model.ProductInfoModel;
@@ -50,7 +50,22 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void increaseStock(List<CartDTO> cartDTOList) {
+        cartDTOList.forEach(cartOne ->{
+            ProductInfoModel productInfo = productInfoRepository.getOne(cartOne.getProductId());
+            if (productInfo == null){
+                throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+            }
+
+            Integer lastStock = productInfo.getProductStock() + cartOne.getProductQuantity();
+
+            // fixme 此处可能会有并发问题
+            productInfo.setProductStock(lastStock);
+
+            productInfoRepository.save(productInfo);
+        });
+
 
     }
 
@@ -61,12 +76,12 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         cartDTOList.forEach(cartOne ->{
             ProductInfoModel productInfo = productInfoRepository.getOne(cartOne.getProductId());
             if (productInfo == null){
-                throw new SellException(ResultEum.PRODUCT_NOT_EXIST);
+                throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
             }
 
             Integer lastStock = productInfo.getProductStock() - cartOne.getProductQuantity();
             if(lastStock < 0){
-                throw new SellException(ResultEum.PRODUCT_NOT_EXIST);
+                throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
             }
 
             // fixme 此处可能会有并发问题

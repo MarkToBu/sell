@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 /**
  * @author Administrator
  */
-public interface OrderMasterRepository extends JpaRepository<OrderMasterModel, Long>, JpaSpecificationExecutor<OrderMasterModel> {
+public interface OrderMasterRepository extends JpaRepository<OrderMasterModel, String>, JpaSpecificationExecutor<OrderMasterModel> {
 
     /**
      * 根据openid查询订单
