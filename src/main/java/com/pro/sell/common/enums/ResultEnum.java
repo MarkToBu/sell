@@ -15,6 +15,7 @@ public enum ResultEnum {
     PARAM_ERROR(17, "参数错误"),
     CART_EMMPTY(18, "购物车给为空"),
     ORDER_OWNER_ERROR(19, "该订单不属于当前用户"),
+    WECHAT_MP_ERROR(20, "微信公众账号方面错误"),
     ;
 
 
