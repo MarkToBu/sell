@@ -14,6 +14,7 @@ import com.pro.sell.model.ProductInfoModel;
 import com.pro.sell.repository.OrderDetailRepository;
 import com.pro.sell.repository.OrderMasterRepository;
 import com.pro.sell.service.OrderService;
+import com.pro.sell.service.PayService;
 import com.pro.sell.service.ProductInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -46,8 +47,11 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderDetailRepository orderDetailRepository;
 
+    @Autowired
+    private PayService payService;
+
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public OrderMasterDTO createOrder(OrderMasterDTO dto) {
         //1.  查询商品信息、库存
         List<OrderDetailModel> orderDetailList = dto.getOrderDetailList();
@@ -123,6 +127,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Page<OrderMasterDTO> findList(Pageable pageable) {
+        Page<OrderMasterModel> all = orderMasterRepository.findAll(pageable);
+        List<OrderMasterDTO> orderMasterDTOList = OrderMasterConverter.convert(all.getContent());
+
+        return new PageImpl<>(orderMasterDTOList, pageable, all.getTotalElements());
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public OrderMasterDTO cancel(OrderMasterDTO orderMasterDTO) {
        OrderMasterModel orderMaster = new OrderMasterModel();
@@ -155,7 +167,7 @@ public class OrderServiceImpl implements OrderService {
 
         //如果已支付，要退款
         if (orderMasterDTO.getPayStatus().equals(PayStatusEnum.SUCCESS.getCode())) {
-            //TODO
+            payService.refund(orderMasterDTO);
         }
 
         return orderMasterDTO;

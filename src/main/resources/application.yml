@@ -27,6 +27,9 @@ spring:
   jackson:
     default-property-inclusion: non_null
 
+  freemarker: #配置freemmarker
+    suffix: .ftl
+
 
 wechat:
   # 公众账号, 授权

@@ -10,9 +10,13 @@ package com.pro.sell.dto;/*
  * Version:5.8.8
  */
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.pro.sell.common.enums.OrderStatusEnums;
+import com.pro.sell.common.enums.PayStatusEnum;
 import com.pro.sell.common.serializer.Date2LongSerializer;
+import com.pro.sell.common.util.EnumUtil;
 import com.pro.sell.model.OrderDetailModel;
 import lombok.Data;
 
@@ -88,6 +92,16 @@ public class OrderMasterDTO implements java.io.Serializable {
     private Timestamp updateTime;
 
     private List<OrderDetailModel> orderDetailList;
+
+    @JsonIgnore
+    public OrderStatusEnums getOrderStatusEnum(){
+        return EnumUtil.getByCode(orderStatus, OrderStatusEnums.class);
+    }
+
+    @JsonIgnore
+    public PayStatusEnum getPayStatusEnum(){
+        return EnumUtil.getByCode(payStatus, PayStatusEnum.class);
+    }
 
 }
 

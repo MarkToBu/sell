@@ -1,5 +1,6 @@
 package com.pro.sell.common.enums;
 
+import com.pro.sell.common.util.EnumUtil;
 import lombok.Getter;
 
 /**
@@ -8,8 +9,8 @@ import lombok.Getter;
  */
 
 @Getter
-public enum  OrderStatusEnums {
-    NEW(0, "新生成"),
+public enum  OrderStatusEnums implements CodeEnum{
+    NEW(0, "新订单"),
     FINISH(1, "旧订单"),
     CANCEL(2, "旧订单");
 
@@ -21,4 +22,6 @@ public enum  OrderStatusEnums {
         this.code = code;
         this.message = message;
     }
+
+
 }
