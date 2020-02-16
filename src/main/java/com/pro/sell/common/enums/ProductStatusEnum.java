@@ -7,9 +7,9 @@ import lombok.Getter;
  * @author Administrator
  */
 @Getter
-public enum ProductStatusEnum {
+public enum ProductStatusEnum implements CodeEnum{
 
-   UP(0,"上架"),
+   UP(0,"在架"),
    DOWN(1, "下架");
 
    private Integer code;

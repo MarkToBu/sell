@@ -9,3 +9,7 @@ imooc_微服务时代Spring Boot企业微信点餐系统
 > http://localhost:8080/sell/seller/order/detail?orderId=1111
 - 完成订单
 - 取消订单
+
+## 实现边栏
+
+## 实现商品 列表 上架下架

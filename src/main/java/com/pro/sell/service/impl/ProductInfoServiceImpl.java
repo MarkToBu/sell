@@ -41,6 +41,11 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 
     @Override
     public Page<ProductInfoModel> findAll(Pageable pageable) {
+/*        Page<OrderMasterModel> all = orderMasterRepository.findAll(pageable);
+        List<OrderMasterDTO> orderMasterDTOList = OrderMasterConverter.convert(all.getContent());
+
+        return new PageImpl<>(orderMasterDTOList, pageable, all.getTotalElements());
+ */
         return productInfoRepository.findAll(pageable);
     }
 
@@ -90,5 +95,31 @@ public class ProductInfoServiceImpl implements ProductInfoService {
             productInfoRepository.save(productInfo);
         });
 
+    }
+
+    @Override
+    public ProductInfoModel onSale(String productId) {
+        ProductInfoModel one = productInfoRepository.getOne(productId);
+        if(one == null) {
+            throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+        }
+        if(one.getProductStatusEnum() == ProductStatusEnum.UP){
+            throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
+        }
+        one.setProductStatus(ProductStatusEnum.UP.getCode());
+        return productInfoRepository.save(one);
+    }
+
+    @Override
+    public ProductInfoModel offSale(String productId) {
+        ProductInfoModel one = productInfoRepository.getOne(productId);
+        if(one == null) {
+            throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+        }
+        if(one.getProductStatusEnum() == ProductStatusEnum.DOWN){
+            throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
+        }
+        one.setProductStatus(ProductStatusEnum.DOWN.getCode());
+        return productInfoRepository.save(one);
     }
 }
