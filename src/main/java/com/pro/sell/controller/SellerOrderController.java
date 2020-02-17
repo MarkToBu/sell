@@ -51,7 +51,7 @@ public class SellerOrderController {
      * @return
      */
     @GetMapping("cancel")
-    public ModelAndView cancle(@RequestParam("orderId") String orderId, Map<String, Object> map){
+    public ModelAndView cancel(@RequestParam("orderId") String orderId, Map<String, Object> map){
         try {
             OrderMasterDTO one = orderService.findOne(orderId);
             orderService.cancel(one);
@@ -113,5 +113,7 @@ public class SellerOrderController {
         map.put("orderDTO", orderDTO);
         return new ModelAndView("order/detail", map);
     }
+
+
 
 }

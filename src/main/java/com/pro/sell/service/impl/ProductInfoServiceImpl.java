@@ -51,7 +51,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 
     @Override
     public ProductInfoModel save(ProductInfoModel productInfoModel) {
-        return null;
+        return productInfoRepository.save(productInfoModel);
     }
 
     @Override
@@ -98,6 +98,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ProductInfoModel onSale(String productId) {
         ProductInfoModel one = productInfoRepository.getOne(productId);
         if(one == null) {
@@ -111,6 +112,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ProductInfoModel offSale(String productId) {
         ProductInfoModel one = productInfoRepository.getOne(productId);
         if(one == null) {

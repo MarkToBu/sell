@@ -67,7 +67,7 @@ public class ProductInfoModel implements java.io.Serializable {
 
     /** 商品状态,0正常1下架 */
     @Column(name = "PRODUCT_STATUS", nullable = true, length = 3)
-    private Integer productStatus;
+    private Integer productStatus = ProductStatusEnum.UP.getCode();
 
     /** 类目编号 */
     @Column(name = "CATEGORY_TYPE", nullable = false, length = 10)
