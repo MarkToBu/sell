@@ -9,8 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by 廖师兄
- * 2017-07-03 01:25
+ * 微信公众号配置 通过公众号下单
  */
 @Component
 public class WechatMpConfig {

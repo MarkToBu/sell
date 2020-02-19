@@ -13,6 +13,7 @@ package com.pro.sell.model;/*
 import java.sql.Timestamp;
 import javax.persistence.*;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
@@ -39,8 +40,9 @@ public class SellerInfoModel implements java.io.Serializable {
      * sellerId
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SELLER_ID", unique = true, nullable = false, length = 32)
+    @GenericGenerator(name="idGenerator", strategy="uuid")
+    @GeneratedValue(generator="idGenerator")
     private String sellerId;
 
     /**

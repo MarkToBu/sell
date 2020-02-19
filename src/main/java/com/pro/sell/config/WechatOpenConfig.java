@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
- * 微信测试账号的配置
+ * 微信开放平台配置 准备扫码登录
  */
 @Component
 public class WechatOpenConfig {

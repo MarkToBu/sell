@@ -28,7 +28,9 @@ spring:
 
   freemarker: #配置freemmarker
     suffix: .ftl
-
+  redis:
+    host: 127.0.0.1
+    port: 6379
 
 wechat:
   # 公众账号, 授权
