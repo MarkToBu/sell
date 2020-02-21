@@ -13,9 +13,7 @@ import com.pro.sell.model.OrderMasterModel;
 import com.pro.sell.model.ProductInfoModel;
 import com.pro.sell.repository.OrderDetailRepository;
 import com.pro.sell.repository.OrderMasterRepository;
-import com.pro.sell.service.OrderService;
-import com.pro.sell.service.PayService;
-import com.pro.sell.service.ProductInfoService;
+import com.pro.sell.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +47,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private PayService payService;
+
+    @Autowired
+    private PushMessage pushMessage;
+
+    @Autowired
+    WebSocket webSocket;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -95,6 +99,9 @@ public class OrderServiceImpl implements OrderService {
                 .map(a -> new CartDTO(a.getProductId(), a.getProductQuantity()))
                 .collect(Collectors.toList());
         productInfoService.decreaseStock(collect );
+
+        //使用websocket发送消息
+        webSocket.sendMessage("你有新的订单");
 
         return dto;
     }
@@ -190,6 +197,8 @@ public class OrderServiceImpl implements OrderService {
             log.error("[取消订单]更新失败，orderMaster={}",orderMasterDTO);
             throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
         }
+        //推送模板消息
+        pushMessage.pushOrderStatus(orderMasterDTO);
 
         return orderMasterDTO;
     }
