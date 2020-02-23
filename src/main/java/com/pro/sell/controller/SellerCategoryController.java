@@ -6,6 +6,9 @@ import com.pro.sell.model.ProductCategoryModel;
 import com.pro.sell.service.ProductCategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +38,7 @@ public class SellerCategoryController {
      * @return
      */
     @GetMapping("/list")
+    @Cacheable(cacheNames = "product", key = "productList")
     public ModelAndView list(Map<String, Object> map){
         List<ProductCategoryModel> all = productCategoryService.findAll();
         map.put("categoryList", all);
@@ -65,6 +69,8 @@ public class SellerCategoryController {
      * @return
      */
     @PostMapping("/save")
+//    @CachePut(cacheNames = "product", key = "productList")
+    @CacheEvict(cacheNames = "product", key = "productList")
     public ModelAndView save(@Valid  ProductCategoryDTO productCategoryDTO, BindingResult bindingResult, Map<String, Object> map){
         if(bindingResult.hasErrors()){
             map.put("msg", bindingResult.getFieldError().getDefaultMessage());

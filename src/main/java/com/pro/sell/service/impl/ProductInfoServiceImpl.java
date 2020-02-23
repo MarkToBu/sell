@@ -8,6 +8,9 @@ import com.pro.sell.model.ProductInfoModel;
 import com.pro.sell.repository.ProductInfoRepository;
 import com.pro.sell.service.ProductInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,12 +22,14 @@ import java.util.List;
  * @author Administrator
  */
 @Service
+@CacheConfig(cacheNames = "productList")  //子域中不要再写cacheNames
 public class ProductInfoServiceImpl implements ProductInfoService {
 
     @Autowired
     ProductInfoRepository productInfoRepository;
 
     @Override
+    @Cacheable(cacheNames = "productList", key = "123", condition = "#id.length() > 5", unless = "#result == null")  //key=#id spEl表达式
     public ProductInfoModel findOne(String id) {
         return productInfoRepository.getOne(id);
     }
@@ -50,6 +55,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     }
 
     @Override
+    @CachePut(cacheNames = "productList", key = "123")
     public ProductInfoModel save(ProductInfoModel productInfoModel) {
         return productInfoRepository.save(productInfoModel);
     }

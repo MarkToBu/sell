@@ -78,7 +78,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ServerResponse handlerException(SellException e) {
         log.error(e.getMessage(), e);
-        return ServerResponse.createByErrorMessage(e.getMessage());
+        return ServerResponse.createByErrorCodeMessage(e.getCode(),e.getMessage());
     }
 
     /**

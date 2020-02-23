@@ -1,11 +1,13 @@
 package com.pro.sell.common.exception;
 
 import com.pro.sell.common.enums.ResultEnum;
+import lombok.Getter;
 
 /**
  * 项目异常
  * @author Administrator
  */
+@Getter
 public class SellException extends RuntimeException {
 
     /**
