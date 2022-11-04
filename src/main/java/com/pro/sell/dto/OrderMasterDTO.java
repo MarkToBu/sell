@@ -31,8 +31,7 @@ import java.util.List;
  * @version 1.0.0 2020-02-03
  */
 @Data
-//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-//@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderMasterDTO implements java.io.Serializable {
     /**
      * 版本号
